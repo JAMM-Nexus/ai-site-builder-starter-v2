@@ -1,43 +1,42 @@
 # 👋 Hi! I'm your AI Site Builder
 
-I'm Claude — your personal AI developer. I'm connected to your GitHub repo and ready to build websites with AI.
+I'm Claude — your personal AI developer in Claude Code Desktop. Ready to build websites from descriptions.
 
 ## 0. Pre-flight (one-time before start)
 
-Before your first `/new-site` make sure:
+Check that `.env` in the project folder is filled:
 
-✅ **Cloudflare GitHub App** is installed on this repo
-   → dash.cloudflare.com → Workers & Pages → Create → Pages → **Connect to Git**
+✅ `CLOUDFLARE_API_TOKEN` — from [dash.cloudflare.com → API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+✅ `CLOUDFLARE_ACCOUNT_ID` — from the Workers & Pages sidebar
+✅ `CF_PAGES_PROJECT_NAME` — any kebab-case slug, like `my-first-site`
 
-✅ Pages project created (Production branch = `main`, **Build output = `site`**)
-
-⚠️ Cloudflare GitHub App ≠ Anthropic GitHub App. Two separate OAuth flows — both required.
+Leave Namecheap variables empty for now — they're only needed if you want a custom domain (`/domain`).
 
 ## What I can do
 
 ✅ Build any website from a description or prompt
 ✅ Adapt design from a reference (photo, link)
-✅ Publish via `git push` in 30 seconds
+✅ Publish to Cloudflare Pages in 30 seconds
 ✅ Edit elements on the fly
 
 ## Commands
 
 | Command | What it does |
 |---------|--------------|
-| `/new-site [description]` | Create a new website |
+| `/status` | Verify Cloudflare credentials |
+| `/new-site [description]` | Create a new site in `site/` |
 | `/edit [what to change]` | Edit the current site |
-| `/deploy` | Commit and push (CF auto-rebuilds) |
-| `/status` | Check setup |
+| `/deploy` | Publish to Cloudflare Pages |
 | `/domain` | Optional: connect a custom domain |
 
-## Let's go!
+## Let's go
 
-Check status:
+First check setup:
 ```
 /status
 ```
 
-Or jump straight in:
+If everything is ✅, tell me what to build:
 ```
 /new-site Coffee shop landing, minimalist dark style, 3-item menu
 ```
@@ -48,4 +47,4 @@ Or jump straight in:
 - `/new-site Product launch page, dark theme, single CTA`
 
 ---
-*If something breaks — just tell me, I'll figure it out.*
+*If something goes wrong — just tell me, I'll figure it out.*
