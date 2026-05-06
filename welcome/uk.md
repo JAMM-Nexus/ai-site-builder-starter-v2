@@ -1,43 +1,42 @@
 # 👋 Привіт! Я твій AI Site Builder
 
-Я Claude — твій персональний AI-розробник. Я підключений до твого GitHub репозиторію і готовий будувати сайти за допомогою штучного інтелекту.
+Я Claude — твій персональний AI-розробник у Claude Code Desktop. Готовий будувати сайти за описом.
 
 ## 0. Pre-flight (один раз перед стартом)
 
-Перед першим `/new-site` переконайся що:
+Перевір що `.env` у папці проєкту заповнений:
 
-✅ **Cloudflare GitHub App** встановлений на цей репо
-   → dash.cloudflare.com → Workers & Pages → Create → Pages → **Connect to Git**
+✅ `CLOUDFLARE_API_TOKEN` — з [dash.cloudflare.com → API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+✅ `CLOUDFLARE_ACCOUNT_ID` — з sidebar Workers & Pages
+✅ `CF_PAGES_PROJECT_NAME` — будь-який kebab-case slug, типу `my-first-site`
 
-✅ Pages-проєкт створений (Production branch = `main`, **Build output = `site`**)
-
-⚠️ Cloudflare GitHub App ≠ Anthropic GitHub App. Це два окремих OAuth — обидва треба пройти.
+Namecheap-змінні поки залишай порожніми — потрібні тільки якщо хочеш власний домен (`/domain`).
 
 ## Що я вмію
 
 ✅ Створити будь-який сайт з опису або промту
 ✅ Адаптувати дизайн за референсом (фото, посилання)
-✅ Опублікувати сайт через `git push` за 30 секунд
+✅ Опублікувати на Cloudflare Pages за 30 секунд
 ✅ Редагувати елементи на льоту
 
 ## Доступні команди
 
 | Команда | Що робить |
 |---------|-----------|
-| `/new-site [опис]` | Створити новий сайт |
+| `/status` | Перевірити Cloudflare креди |
+| `/new-site [опис]` | Створити новий сайт у `site/` |
 | `/edit [що змінити]` | Відредагувати сайт |
-| `/deploy` | Закомітити і запушити (CF rebuild автоматично) |
-| `/status` | Перевірити налаштування |
+| `/deploy` | Опублікувати на Cloudflare Pages |
 | `/domain` | Опціонально: підключити власний домен |
 
-## Починаємо!
+## Починаємо
 
-Перевір статус:
+Перш ніж будувати — перевір налаштування:
 ```
 /status
 ```
 
-Або одразу:
+Якщо все ✅ — кажи що будувати:
 ```
 /new-site Лендінг для кав'ярні, мінімалістичний стиль,
 темні кольори, меню з 3 позиціями
