@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Site</title>
+  <meta name="description" content="Built with AI Site Builder">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="brand">MySite</a>
+        <nav class="nav">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button class="burger" aria-label="Menu" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <span class="tag">Welcome</span>
+        <h1>Your Headline Goes Here</h1>
+        <p class="sub">A compelling subheadline that explains your value proposition in one or two sentences.</p>
+        <div class="actions">
+          <a href="#contact" class="btn btn-primary">Get Started</a>
+          <a href="#about" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about reveal" id="about">
+    <div class="container">
+      <h2>About Us</h2>
+      <p class="section-sub">Tell your story here. Who are you, what do you do, and why does it matter?</p>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="icon">⚡</div>
+          <h3>Fast</h3>
+          <p>Describe your first key benefit here.</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🎯</div>
+          <h3>Precise</h3>
+          <p>Describe your second key benefit here.</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🔒</div>
+          <h3>Reliable</h3>
+          <p>Describe your third key benefit here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services reveal" id="services">
+    <div class="container">
+      <h2>Services</h2>
+      <p class="section-sub">What do you offer? List your main services or products.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Service One</h3>
+          <p>Brief description of this service and what the client gets.</p>
+          <a href="#contact" class="btn btn-outline">Learn More</a>
+        </div>
+        <div class="service-card">
+          <h3>Service Two</h3>
+          <p>Brief description of this service and what the client gets.</p>
+          <a href="#contact" class="btn btn-outline">Learn More</a>
+        </div>
+        <div class="service-card">
+          <h3>Service Three</h3>
+          <p>Brief description of this service and what the client gets.</p>
+          <a href="#contact" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section reveal">
+    <div class="container">
+      <h2>Ready to Get Started?</h2>
+      <p>One sentence that creates urgency or excitement about working with you.</p>
+      <a href="#contact" class="btn btn-primary btn-lg">Contact Us Today</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact reveal" id="contact">
+    <div class="container">
+      <h2>Get In Touch</h2>
+      <p class="section-sub">We'd love to hear from you.</p>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+        </div>
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="brand">MySite</span>
+        <p>© 2026 MySite. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('Thanks! We\'ll be in touch soon.');
+      e.target.reset();
+    }
+  </script>
+
+</body>
+</html>
