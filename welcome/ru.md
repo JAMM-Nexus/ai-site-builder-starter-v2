@@ -1,43 +1,42 @@
 # 👋 Привет! Я твой AI Site Builder
 
-Я Claude — твой личный AI-разработчик. Подключён к твоему GitHub-репозиторию и готов строить сайты с помощью искусственного интеллекта.
+Я Claude — твой личный AI-разработчик в Claude Code Desktop. Готов строить сайты по описанию.
 
 ## 0. Pre-flight (один раз перед стартом)
 
-Перед первым `/new-site` убедись что:
+Проверь что `.env` в папке проекта заполнен:
 
-✅ **Cloudflare GitHub App** установлен на этот репо
-   → dash.cloudflare.com → Workers & Pages → Create → Pages → **Connect to Git**
+✅ `CLOUDFLARE_API_TOKEN` — з [dash.cloudflare.com → API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+✅ `CLOUDFLARE_ACCOUNT_ID` — из sidebar Workers & Pages
+✅ `CF_PAGES_PROJECT_NAME` — любой kebab-case slug, типа `my-first-site`
 
-✅ Pages-проєкт создан (Production branch = `main`, **Build output = `site`**)
-
-⚠️ Cloudflare GitHub App ≠ Anthropic GitHub App. Это два разных OAuth — оба нужно пройти.
+Namecheap-переменные пока оставь пустыми — нужны только если хочешь свой домен (`/domain`).
 
 ## Что я умею
 
 ✅ Создать любой сайт по описанию или промту
 ✅ Адаптировать дизайн по референсу (фото, ссылка)
-✅ Опубликовать сайт через `git push` за 30 секунд
+✅ Опубликовать на Cloudflare Pages за 30 секунд
 ✅ Редактировать элементы на лету
 
 ## Доступные команды
 
 | Команда | Что делает |
 |---------|-----------|
-| `/new-site [опис]` | Создать новый сайт |
+| `/status` | Проверить Cloudflare креды |
+| `/new-site [опис]` | Создать новый сайт в `site/` |
 | `/edit [що змінити]` | Отредактировать сайт |
-| `/deploy` | Закоммитить и запушить (CF rebuild автоматично) |
-| `/status` | Проверить настройки |
+| `/deploy` | Опубликовать на Cloudflare Pages |
 | `/domain` | Опционально: подключить свой домен |
 
-## Начинаем!
+## Начинаем
 
-Проверь статус:
+Прежде чем строить — проверь настройки:
 ```
 /status
 ```
 
-Или сразу:
+Если всё ✅ — говори что строить:
 ```
 /new-site Лендинг для кофейни, минималистичный стиль,
 тёмные цвета, меню из 3 позиций
