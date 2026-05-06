@@ -1,52 +1,56 @@
-# AI Site Builder — Starter Kit v2
+# AI Site Builder — Starter Kit
+> Desktop edition. Запускається з Claude Code Desktop у папці проєкту.
+> Course: [create-your-ai.site](https://create-your-ai.site)
 
-> Git-driven. Усе в Claude Code Web. Без локальних інструментів.
-> Powered by Claude Code | github.com/JAMM-Automation/ai-site-builder-starter-v2
+---
+
+## Stack
+
+- **Claude Code Desktop** — генерує і редагує сайти у папці `site/`
+- **Cloudflare Pages** — hosting (безкоштовно). Деплой через `wrangler pages deploy` локально.
+- **Namecheap** *(опціонально)* — реєстратор для власного домену через `/domain` команду.
 
 ---
 
 ## First Message Protocol
 
-**Step 1 — Detect language from the user's first message:**
-- Ukrainian → load `welcome/uk.md` → respond in Ukrainian
-- Russian → load `welcome/ru.md` → respond in Russian
-- English → load `welcome/en.md` → respond in English
-- Spanish/other → load `welcome/es.md` → respond in Spanish
+Коли студент пише першим — визнач мову з повідомлення:
+- Українська → `welcome/uk.md` → відповідай українською
+- Російська → `welcome/ru.md` → російською
+- English → `welcome/en.md` → English
+- Spanish → `welcome/es.md` → Español
 
-**Step 2 — Greet the user**, show available commands, ask what site to build.
+Привітайся, покажи список команд, спитай який сайт побудувати.
 
 ---
 
-## Pre-flight (one-time setup, у Cloudflare Dashboard)
+## Required setup
 
-Студент робить це **один раз** перед першим запуском Claude Code Web:
+`.env` з 3 обов'язковими змінними:
+- `CLOUDFLARE_API_TOKEN` — для wrangler (Cloudflare Pages — Edit permission)
+- `CLOUDFLARE_ACCOUNT_ID` — з sidebar Workers & Pages у dash.cloudflare.com
+- `CF_PAGES_PROJECT_NAME` — slug майбутнього сайту (kebab-case)
 
-1. Cloudflare Dashboard → Workers & Pages → Create → Pages → **Connect to Git**
-2. Install **Cloudflare GitHub App** → дати доступ до цього репо
-3. Production branch = `main`, **Build output directory = `site`**, Build command = (порожнє)
-4. Save and Deploy → перший білд запускається автоматично з вмістом `site/`
-5. Записати у `.env` тільки якщо плануєш `/domain` — інакше пропустити
+**Namecheap змінні — ТІЛЬКИ для опціональної команди `/domain`.** Базовий флоу (створити + опублікувати сайт на pages.dev) працює без них.
 
-⚠️ **Cloudflare GitHub App ≠ Anthropic GitHub App.** Це два окремі OAuth flows. Обидва треба пройти (Anthropic — щоб Claude Code мав доступ до коду; Cloudflare — щоб ловив git push і деплоїв).
+⚠️ Ніколи не друкуй значення з `.env` у відповідях. Читай через `os.getenv()`.
 
 ---
 
 ## Commands
 
-Команди студент пише у чат Claude Code Web. Слеш не обов'язковий.
-
-| Команда | Що робить | Потребує |
-|---------|-----------|----------|
-| `/new-site [опис]` | Згенерувати сайт у `site/` | нічого |
-| `/edit [що змінити]` | Відредагувати поточний сайт | нічого |
-| `/deploy` | Закомітити `site/` і запушити у `main` (CF auto-rebuild) | git access (Anthropic GitHub App) |
-| `/status` | Перевірити підключення (GitHub repo, Cloudflare App) | нічого |
-| `/domain` | Підключити власний домен через Namecheap + CF API | `.env` заповнений |
+| Команда | Що робить | Pre-conditions |
+|---------|-----------|----------------|
+| `/new-site [опис]` | Згенерувати сайт у `site/` під опис | нічого |
+| `/edit [що змінити]` | Відредагувати поточний сайт | `site/index.html` існує |
+| `/deploy` | Опублікувати на Cloudflare Pages через wrangler | CF креди у `.env` |
+| `/status` | Перевірити налаштування | нічого |
+| `/domain` | Опціонально: підключити власний домен | Namecheap креди + `DOMAIN` |
 
 Природні промпти теж розпізнаються:
 - "Створи лендинг для кав'ярні" → `/new-site`
 - "Зроби кнопку червоною" → `/edit`
-- "Опублікуй" / "пуш у прод" → `/deploy`
+- "Опублікуй" → `/deploy`
 
 ---
 
@@ -56,9 +60,9 @@
 
 **Workflow:**
 1. Прочитати `site-template/` як стартову точку
-2. Згенерувати кастомний `site/index.html`, `site/assets/style.css` під опис
-3. Зберегти у папці `site/` (НЕ у `site-template/`)
-4. Повідомити: "Готово. Перевір локально preview, потім кажи `/deploy`."
+2. Згенерувати кастомний `site/index.html`, `site/assets/style.css`
+3. Якщо `CF_PAGES_PROJECT_NAME` у `.env` порожнє — згенерувати slug з опису і запропонувати додати у `.env`
+4. Повідомити: "Готово. Тепер `/deploy` щоб опублікувати."
 
 ---
 
@@ -68,8 +72,8 @@
 
 **Workflow:**
 1. Прочитати поточний `site/index.html` і `site/assets/style.css`
-2. Внести точкові зміни згідно опису
-3. Повідомити: "Готово. `/deploy` щоб опублікувати."
+2. Внести точкові зміни
+3. Повідомити: "Готово. `/deploy` щоб оновити live."
 
 ---
 
@@ -78,13 +82,12 @@
 **Trigger:** `/deploy`
 
 **Workflow:**
-1. Перевірити, що `site/index.html` існує
-2. `git add site/`
-3. `git commit -m "deploy: <short message>"`
-4. `git push origin main`
-5. Повідомити: "Pushed. Cloudflare Pages rebuild ~30 секунд. Перевір https://{project}.pages.dev"
+1. Запустити `python3 scripts/deploy.py` (auto-installs python-dotenv)
+2. Скрипт викликає `npx wrangler@3 pages deploy ./site --project-name=<slug>`
+3. Wrangler авторизується через `CLOUDFLARE_API_TOKEN` з `.env` (без OAuth)
+4. Повідомити URL `https://<slug>.pages.dev`
 
-**Без локального wrangler.** Pages-проєкт сам ловить webhook і деплоїть `site/`.
+⚠️ При першому деплої Cloudflare створює Pages проєкт автоматично через API.
 
 ---
 
@@ -93,16 +96,9 @@
 **Trigger:** `/status`
 
 **Workflow:**
-1. Підтвердити що Claude бачить `site/index.html` (репо підключено)
-2. Перевірити чи є `.git/config` — git налаштований
-3. Опціонально: перевірити чи `.env` є і чи заповнено `CLOUDFLARE_API_TOKEN` (для `/domain`)
-4. Повідомити статус словами:
-   ```
-   ✓ GitHub repo: connected (this is your repo)
-   ✓ Cloudflare GitHub App: треба перевірити вручну в dash.cloudflare.com
-   ✓ /new-site, /edit, /deploy: готові
-   ✓ /domain: {available якщо .env заповнений / not configured інакше}
-   ```
+1. Запустити `python3 scripts/check_setup.py`
+2. Скрипт перевіряє: CF креди → API call → success
+3. Звітує: ✓ CF готовий / ○ Namecheap не налаштований (OK для базового флоу)
 
 ---
 
@@ -110,17 +106,15 @@
 
 **Trigger:** `/domain`
 
-**Pre-conditions:**
-- `.env` створений з `.env.example` і заповнений
-- `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `NAMECHEAP_*`, `DOMAIN` заповнені
+**Pre-conditions:** `.env` заповнений Namecheap-змінними і `DOMAIN`
 
 **Workflow:**
-1. Запустити `python3 scripts/setup_domain.py` (auto-installs requirements)
-2. Скрипт додає apex (`@`) і `www` CNAME у Namecheap → CF Pages
-3. Скрипт реєструє custom hostname у CF Pages через CF API
+1. Запустити `python3 scripts/setup_domain.py`
+2. Скрипт додає apex (`@`) і `www` CNAME у Namecheap
+3. Реєструє custom hostname у CF Pages через CF API
 4. Повідомити URL з HTTPS
 
-⚠️ DNS propagation 5хв — 24год. CF показує статус у dashboard.
+DNS propagation 5хв-24год.
 
 ---
 
@@ -128,20 +122,18 @@
 
 | Path | Purpose |
 |------|---------|
-| `site/` | Деплоєвий вміст (HTML, CSS, JS). CF Pages бере звідси. |
+| `site/` | Деплоєвий вміст (HTML, CSS, JS). Cloudflare публікує звідси. |
 | `site-template/` | Reference template для `/new-site`. Не деплоїться. |
-| `welcome/uk.md`, `ru.md`, `en.md`, `es.md` | Multilingual вітання |
-| `scripts/deploy.py` | Git-push wrapper для `/deploy` |
-| `scripts/setup_domain.py` | Опціональний скрипт для `/domain` |
-| `scripts/check_setup.py` | Опціональна перевірка для `/status` |
-| `.env.example` | Шаблон секретів (тільки для `/domain`) |
-| `.gitignore` | Виключає `.env` і `node_modules/` (НЕ `site/`) |
+| `welcome/{uk,ru,en,es}.md` | Multilingual вітання |
+| `scripts/deploy.py` | wrangler wrapper для `/deploy` |
+| `scripts/check_setup.py` | Перевірка для `/status` |
+| `scripts/setup_domain.py` | Опціональний для `/domain` |
+| `.env` | Креди (НІКОЛИ не коміти) |
 
 ---
 
 ## Ніколи
 
-- ❌ Не друкувати значення з `.env` у відповідях
-- ❌ Не додавати `.env` у git
-- ❌ Не пропонувати `wrangler login` — git push є джерелом деплою
-- ❌ Не плутати Anthropic GitHub App і Cloudflare GitHub App
+- ❌ Не друкувати значення з `.env`
+- ❌ Не коміти `.env` у git
+- ❌ Не вимагати Namecheap для базового флоу — це опціонально
