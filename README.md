@@ -1,42 +1,52 @@
-# AI Site Builder — Starter Kit v2
+# AI Site Builder — Starter Kit
 
-> Build any website in minutes using Claude Code Web + GitHub + Cloudflare Pages.
+> Build any website in minutes using Claude Code Desktop + Cloudflare Pages.
 > Course: [create-your-ai.site](https://create-your-ai.site)
 
 ---
 
-## Quick Start (5 minutes)
+## Quick Start
 
-### 1. Import this repository
-- [github.com/new/import](https://github.com/new/import)
-- Clone URL: `https://github.com/JAMM-Automation/ai-site-builder-starter-v2`
-- Repository name: `my-first-ai-site` (or any other)
-- Visibility: **Private** (recommended)
-- Click **Begin import**
+### 1. Get Claude Pro
+[claude.ai](https://claude.ai) → Sign up → Subscribe to Claude Pro ($20/mo).
+Required for Claude Code Desktop access.
 
-### 2. Connect Cloudflare Pages
-- [dash.cloudflare.com](https://dash.cloudflare.com) → Workers & Pages → Create → Pages → **Connect to Git**
-- Install **Cloudflare GitHub App** → grant access to your imported repo
-- Production branch: `main`, **Build output directory: `site`**, Build command: (empty)
-- Save and Deploy → first build runs automatically
+### 2. Download this Starter Kit
+On this GitHub page click **Code** (green button) → **Download ZIP**.
+Extract to a convenient folder, e.g. `~/Documents/ai-site-builder/`.
 
-### 3. Connect Claude Code Web
-- [claude.ai/code](https://claude.ai/code) → New project → Connect GitHub
-- Select your imported repo → Authorize Anthropic
-- Open the project — Claude greets you in your language
+### 3. Install Claude Code Desktop
+Download from [claude.ai/download](https://claude.ai/download) → install for your OS (macOS / Windows / Linux).
+Open Claude Code Desktop → "Open folder" → select your extracted Starter Kit folder.
 
-### 4. Build a site
-In Claude Code Web chat:
+### 4. Get Cloudflare credentials
+- Sign up at [cloudflare.com](https://cloudflare.com) (free).
+- [API Token](https://dash.cloudflare.com/profile/api-tokens): Create Token → "Edit Cloudflare Workers" template → Continue → Create Token. Copy the value.
+- Account ID: [dash.cloudflare.com](https://dash.cloudflare.com) → Workers & Pages → right sidebar → Account ID. Copy.
+
+### 5. Fill `.env`
+Open `.env` in the Starter Kit folder. Fill 3 values:
 ```
-/new-site Лендинг для кав'ярні, темний стиль, меню з 3 позиціями
+CLOUDFLARE_API_TOKEN=<your token>
+CLOUDFLARE_ACCOUNT_ID=<your account id>
+CF_PAGES_PROJECT_NAME=my-first-site
 ```
 
-### 5. Publish
+(Leave Namecheap fields empty — they're only needed for `/domain` command.)
+
+### 6. Build a site
+In Claude Code Desktop chat:
+```
+/new-site Coffee shop landing, dark style, 3-item menu
+```
+
+### 7. Publish
 ```
 /deploy
 ```
 
-`git push` → Cloudflare auto-rebuilds → ~30 seconds → live on `<your-project>.pages.dev`.
+Wrangler runs locally, deploys `site/` folder to Cloudflare Pages.
+~30 seconds → live on `https://my-first-site.pages.dev`.
 
 ---
 
@@ -46,53 +56,32 @@ In Claude Code Web chat:
 |---------|-------------|
 | `/new-site [description]` | Build a new website |
 | `/edit [what to change]` | Modify the current site |
-| `/deploy` | Push `site/` to GitHub (CF rebuilds automatically) |
-| `/status` | Check connections |
-| `/domain` | Optional: connect a custom domain via Namecheap + CF |
+| `/deploy` | Publish to Cloudflare Pages via wrangler |
+| `/status` | Verify Cloudflare credentials work |
+| `/domain` | Optional: connect a custom domain (requires Namecheap creds) |
 
 ---
 
-## Optional: Custom Domain
+## Custom domain (optional)
 
-For `/domain` you need:
-1. Copy `.env.example` to `.env`
-2. Fill in `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `NAMECHEAP_*`, `DOMAIN`
-3. Run `/domain` in Claude Code Web
+If you want `mysite.com` instead of `mysite.pages.dev`:
+1. Buy a domain at [namecheap.com](https://namecheap.com).
+2. Get Namecheap API key: Profile → Tools → API Access → enable + whitelist your IP.
+3. Fill `NAMECHEAP_*` and `DOMAIN` in `.env`.
+4. Run `/domain` in Claude Code Desktop.
 
-Without `.env`, the basic flow (build + publish on `*.pages.dev`) works fine — no API tokens needed.
-
----
-
-## How it works
-
-```
-Claude Code Web
-   │
-   ├─ writes site/ → git push origin main
-   │
-   ▼
-GitHub repo (your private copy of starter v2)
-   │
-   ├─ webhook fires
-   │
-   ▼
-Cloudflare Pages
-   │
-   └─ rebuild → publish to <project>.pages.dev (HTTPS auto)
-```
-
-No local Python, no wrangler, no local API tokens. Everything in browser.
+Without this — your site lives on the free `*.pages.dev` URL forever, with HTTPS.
 
 ---
 
 ## Files
 
-- `site/` — deployable HTML/CSS/JS (this is what Cloudflare publishes)
-- `site-template/` — reference template (NOT deployed)
-- `welcome/` — multilingual greetings (uk/ru/en/es)
-- `scripts/` — optional Python helpers (auto-install deps when run)
-- `CLAUDE.md` — instructions for Claude Code agent
-- `.env.example` — secrets template (only needed for `/domain`)
+- `site/` — your generated website (deploys to Cloudflare)
+- `site-template/` — reference template Claude uses for `/new-site`
+- `welcome/` — Claude's multilingual greeting (uk/ru/en/es)
+- `scripts/` — Python helpers (auto-install dependencies on first run)
+- `CLAUDE.md` — instructions for the Claude agent
+- `.env` — your credentials (never commit)
 
 ---
 
