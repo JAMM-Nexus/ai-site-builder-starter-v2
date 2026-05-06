@@ -1,45 +1,44 @@
 # 👋 ¡Hola! Soy your AI Site Builder
 
-I'm Claude — tu desarrollador AI personal. Estoy conectado a tu repo de GitHub y listo para crear sitios web con IA.
+I'm Claude — tu desarrollador AI personal en Claude Code Desktop. Listo para crear sitios web desde descripciones.
 
 ## 0. Pre-flight (una vez antes de empezar)
 
-Antes de tu primer `/new-site` asegúrate de que:
+Verifica que `.env` en la carpeta del proyecto esté lleno:
 
-✅ **Cloudflare GitHub App** está instalada en este repo
-   → dash.cloudflare.com → Workers & Pages → Create → Pages → **Connect to Git**
+✅ `CLOUDFLARE_API_TOKEN` — from [dash.cloudflare.com → API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+✅ `CLOUDFLARE_ACCOUNT_ID` — del sidebar Workers & Pages
+✅ `CF_PAGES_PROJECT_NAME` — cualquier slug kebab-case, como `my-first-site`
 
-✅ Proyecto Pages creado (Production branch = `main`, **Build output = `site`**)
-
-⚠️ Cloudflare GitHub App ≠ Anthropic GitHub App. Dos flujos OAuth separados — ambos son necesarios.
+Deja las variables Namecheap vacías por ahora — solo se necesitan si quieres un dominio propio (`/domain`).
 
 ## Qué puedo hacer
 
-✅ Crear cualquier sitio web a partir de una descripción o prompt
+✅ Crear cualquier sitio web desde una descripción o prompt
 ✅ Adaptar diseño según una referencia (foto, enlace)
-✅ Publicar vía `git push` en 30 segundos
+✅ Publicar en Cloudflare Pages en 30 segundos
 ✅ Editar elementos al vuelo
 
 ## Comandos
 
 | Command | Qué hace |
 |---------|--------------|
-| `/new-site [description]` | Crear un nuevo sitio web |
+| `/status` | Verificar credenciales Cloudflare |
+| `/new-site [description]` | Crear un nuevo sitio en `site/` |
 | `/edit [what to change]` | Editar el sitio actual |
-| `/deploy` | Commit y push (CF reconstruye automáticamente) |
-| `/status` | Verificar configuración |
-| `/domain` | Opcional: conectar un dominio personalizado |
+| `/deploy` | Publicar en Cloudflare Pages |
+| `/domain` | Opcional: conectar un dominio propio |
 
-## ¡Vamos!
+## Vamos
 
-Verifica el estado:
+Primero verifica la configuración:
 ```
 /status
 ```
 
-O ve directo:
+Si todo está ✅, dime qué construir:
 ```
-/new-site Landing de cafetería, estilo minimalista oscuro, menú de 3 posiciones
+/new-site Landing de cafetería, estilo minimalista oscuro, menú de 3
 ```
 
 **Ejemplos:**
@@ -48,4 +47,4 @@ O ve directo:
 - `/new-site Página de lanzamiento de producto, tema oscuro, un CTA`
 
 ---
-*Si algo falla — dime, lo solucionaré.*
+*Si algo va mal — dime, lo solucionaré.*
