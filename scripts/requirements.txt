@@ -1,3 +1,3 @@
-# Optional — only needed for /domain command.
-requests>=2.31
+# Auto-installed on first run by scripts/*.py
 python-dotenv>=1.0
+requests>=2.31
