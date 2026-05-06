@@ -1,21 +1,16 @@
-# ─────────────────────────────────────────────
-# AI Site Builder — Starter Kit v2 (git-driven)
-# site/ — деплоється на Cloudflare Pages, тому має бути у git
-# ─────────────────────────────────────────────
-
-# Secrets — НІКОЛИ у git
-.env
-
 # Python
 __pycache__/
 *.pyc
-*.pyo
 .venv/
 venv/
 
-# Node (опціонально, якщо хтось ставить wrangler локально)
+# Node (npx wrangler cache)
 node_modules/
 .wrangler/
+
+# Generated site (опціонально — деплоюється через wrangler)
+# Розкоментуй якщо не хочеш версіонувати site/ у git
+# site/
 
 # OS
 .DS_Store
