@@ -8,9 +8,15 @@ venv/
 node_modules/
 .wrangler/
 
-# Generated site (опціонально — деплоюється через wrangler)
-# Розкоментуй якщо не хочеш версіонувати site/ у git
-# site/
+# Per-project active pointer — personal, not for git
+projects/.active
+
+# Generated projects (опціонально — деплояться через wrangler)
+# Розкоментуй якщо не хочеш версіонувати projects/ у git
+# projects/
+
+# Backups left by v2→v3 migration
+.backup-pre-v3-*/
 
 # OS
 .DS_Store

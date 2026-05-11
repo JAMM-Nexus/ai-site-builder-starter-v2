@@ -1,50 +1,66 @@
-# 👋 ¡Hola! Soy your AI Site Builder
+# 👋 ¡Hola! Soy tu AI Site Builder
 
-I'm Claude — tu desarrollador AI personal en Claude Code Desktop. Listo para crear sitios web desde descripciones.
+Soy Claude — tu desarrollador AI personal en Claude Code Desktop. Listo para crear **cualquier cantidad** de sitios web y proyectos desde descripciones. Cada proyecto vive en su propia carpeta y se despliega de forma independiente.
 
 ## 0. Pre-flight (una vez antes de empezar)
 
-Verifica que `.env` en la carpeta del proyecto esté lleno:
+Verifica que `.env` en la carpeta del proyecto esté completo:
 
-✅ `CLOUDFLARE_API_TOKEN` — from [dash.cloudflare.com → API Tokens](https://dash.cloudflare.com/profile/api-tokens)
-✅ `CLOUDFLARE_ACCOUNT_ID` — del sidebar Workers & Pages
-✅ `CF_PAGES_PROJECT_NAME` — cualquier slug kebab-case, como `my-first-site`
+✅ `CLOUDFLARE_API_TOKEN` — de [dash.cloudflare.com → API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+✅ `CLOUDFLARE_ACCOUNT_ID` — de la barra lateral de Workers & Pages
 
-Deja las variables Namecheap vacías por ahora — solo se necesitan si quieres un dominio propio (`/domain`).
+Son credenciales **globales** — se llenan una vez y funcionan para todos tus sitios.
 
-## Qué puedo hacer
+Deja vacías las variables de Namecheap — solo se necesitan para un dominio propio (`/domain`).
 
-✅ Crear cualquier sitio web desde una descripción o prompt
-✅ Adaptar diseño según una referencia (foto, enlace)
-✅ Publicar en Cloudflare Pages en 30 segundos
+## Lo que puedo hacer
+
+✅ Crear cualquier sitio web o proyecto desde una descripción
+✅ Mantener **muchos** sitios en paralelo en `projects/<slug>/`
+✅ Adaptar el diseño desde una referencia (foto, enlace)
+✅ Publicar cualquier sitio en Cloudflare Pages en 30 segundos
 ✅ Editar elementos al vuelo
+✅ Cambiar entre sitios con `/use <slug>`
 
 ## Comandos
 
-| Command | Qué hace |
-|---------|--------------|
-| `/status` | Verificar credenciales Cloudflare |
-| `/new-site [description]` | Crear un nuevo sitio en `site/` |
-| `/edit [what to change]` | Editar el sitio actual |
-| `/deploy` | Publicar en Cloudflare Pages |
-| `/domain` | Opcional: conectar un dominio propio |
+| Comando | Qué hace |
+|---------|----------|
+| `/status` | Verifica credenciales + lista tus proyectos |
+| `/new-site <slug> [descripción]` | Crea un sitio nuevo en `projects/<slug>/` |
+| `/edit [slug] [qué cambiar]` | Edita un sitio (el activo si no se da slug) |
+| `/deploy [slug]` | Publica en Cloudflare Pages |
+| `/list` | Muestra todos tus sitios + URLs |
+| `/use <slug>` | Activa un proyecto |
+| `/domain [slug]` | Opcional: conecta un dominio propio |
 
-## Vamos
+## Empezamos
 
 Primero verifica la configuración:
 ```
 /status
 ```
 
-Si todo está ✅, dime qué construir:
+Si todo está ✅, dime qué construir. **Slug** = nombre corto en kebab-case (`coffee-shop`, `portfolio`, `cafe-landing`):
+
 ```
-/new-site Landing de cafetería, estilo minimalista oscuro, menú de 3
+/new-site cafe-landing Landing para cafetería, estilo minimalista oscuro, menú de 3 items
 ```
 
 **Ejemplos:**
-- `/new-site Portafolio de fotógrafo, paleta cálida`
-- `/new-site Sitio de bufete de abogados, azul corporativo`
-- `/new-site Página de lanzamiento de producto, tema oscuro, un CTA`
+- `/new-site portfolio Portafolio de fotógrafo, paleta cálida`
+- `/new-site law-firm Sitio de bufete de abogados, azul corporativo`
+- `/new-site product-launch Página de lanzamiento de producto, dark theme, un CTA`
+
+## Segundo, tercer, centésimo sitio
+
+Solo crea otro — los anteriores no desaparecen:
+```
+/new-site portfolio Portafolio de fotógrafo
+/deploy
+```
+
+`/list` muestra todos. `/use <slug>` cambia el activo.
 
 ---
-*Si algo va mal — dime, lo solucionaré.*
+*Si algo sale mal — solo dime, lo resolveremos.*
